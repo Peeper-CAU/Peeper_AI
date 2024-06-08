@@ -6,6 +6,8 @@ WORKDIR /app
 ADD ./ /app
 
 RUN python3 -m pip install -r requirements.txt
+RUN sudo apt update
+RUN sudo apt install -y portaudio19-dev
 
 EXPOSE 5000
 EXPOSE 5001
