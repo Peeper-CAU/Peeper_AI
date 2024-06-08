@@ -3,6 +3,6 @@
 set -m
 
 python3 app.py &
-streamlit run streamlit_demo.py --server.port 5001 &
+streamlit run streamlit_demo.py --server.port 5001
 
-wait -n
+fg %1
