@@ -69,7 +69,7 @@ def wav_analysis():
             text = transcribe_audio(combined_audio, fs1)
         except:
             print("transcribe_audio error occurs!")
-            text = " "
+            text = "대화 없음"
         is_phishing = voicePhishingAnalysis(text)
 
         if is_phishing:
