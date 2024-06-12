@@ -65,7 +65,11 @@ def wav_analysis():
             return jsonify({'error': 'Sampling rates do not match'}), 400
 
         combined_audio = np.concatenate((audio_data1, audio_data2))
-        text = transcribe_audio(combined_audio, fs1)
+        try:
+            text = transcribe_audio(combined_audio, fs1)
+        except:
+            print("transcribe_audio error occurs!")
+            text = "대화 없음"
         is_phishing = voicePhishingAnalysis(text)
 
         if is_phishing:

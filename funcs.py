@@ -31,6 +31,8 @@ def transcribe_audio(audio_data, fs):
                 file=audio_file
             )
             
+    if "시청" in transcription.text and "감사" in transcription.text:
+        return "대화 없음"
     
     return transcription.text
 
