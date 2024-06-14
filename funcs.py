@@ -62,16 +62,15 @@ def voicePhishingAnalysis(dialog_text, model_name = 'gemini-1.5-pro-latest'):
     
     prompt = f"""
 다음 문단은 전화 대화 상황입니다. 똑똑한 수사관의 관점에서 보이스 피싱인지 잡아내야 합니다.
-대화에서 '개인 정보(주민번호 등)를 탈취하기 위해 지시를 하거나, 금전(돈, 계좌이체 등)을 요구하고 있는지를 검출해야 합니다.
-잘못하면 잘못 없는 사람이 범죄자가 될 수 있으니, 확실히 보이스피싱으로 의심되는 경우에만 신중하게 'true'라고 답변해야합니다.
+대화에서 '개인 정보(주민번호)를 탈취하거나 금전(돈, 계좌이체 등)을 요구하고 있는지를 답변해야 합니다.
+반드시 'true'/'false'로만 답변해야합니다.
+잘못하면 잘못 없는 사람이 범죄자가 될 수 있으니, 확실히 보이스피싱으로 확신되는 경우에만 신중하게 'true'라고 답변해야합니다 
 
 [대화]
 {dialog_text}
-
-Using this JSON schema:
+""" + """Using this JSON schema:
     response = {{"SuspectedVoicephishing": True/False}}
-Return a `response`
-"""
+Return a `response`"""
     response = model.generate_content(
         [prompt],
         safety_settings={
@@ -83,4 +82,4 @@ Return a `response`
         ,request_options= {"timeout": 10}
     )
     
-    return json.loads(response.text)['SuspectedVoicephishing']
+    return bool(json.loads(response.text)['SuspectedVoicephishing'])
